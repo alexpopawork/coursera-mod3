@@ -20,9 +20,7 @@
     <div class="form-group narrow-button">
       <button class="btn btn-primary" ng-click="narrowMenu.getItems()">Narrow It Down For Me!</button>
     </div>
-	
-	<li ng-repeat="entry in narrowMenu.found">{{entry.name}}</li>
-	
+		
     <!-- found-items should be implemented as a component -->
     <found-items found-items="narrowMenu.found" on-remove=""></found-items>
   </div>
