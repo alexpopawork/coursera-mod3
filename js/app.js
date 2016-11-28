@@ -11,14 +11,19 @@
 	function NarrowItDownController(MenuSearchService){
 		
 		var list = this;
-		
+		list.searchTerm = '';
+		list.searchTermDone = "";
 		list.getItems = function(){
 			var menuPromise = MenuSearchService.getMatchedMenuItems(list.searchTerm);
 			menuPromise.then(function(result){
 				list.found = result;
-				console.log(result)
+				list.searchTermDone = list.searchTerm;
 			});
-		}
+		};
+		
+		list.removeItem = function(indexToRemove){
+			list.found.splice(indexToRemove, 1);
+		};
 		
 	};
 	
@@ -33,7 +38,7 @@
 			}).then(function (result) {
 				var foundItems = result.data.menu_items;
 				for(var i=0; i<foundItems.length; i++){
-					if(foundItems[i].name.indexOf(searchTerm) !== -1){
+					if(searchTerm.length != 0 && foundItems[i].name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1){
 						foundItems.splice(i, 1);
 					}
 				}
@@ -45,10 +50,29 @@
 	function FoundItems(){
 		return {
 			scope: {
-				foundItems: "="
+				menu: "<",
+				searchTerm: "<",
+				onRemove: "&"
 			},
-			templateUrl: "menu.html"
+			templateUrl: "menu.html",
+			controller: FoundItemsController,
+			controllerAs: "items",
+			bindToController: true
 		};
+	};
+	
+	function FoundItemsController(){
+		var items = this;
+		items.getMessage = function(){
+			if(items.menu === undefined){
+				return '';
+			}
+			if(items.searchTerm.length != 0){
+				return "Items found excluding "+items.searchTerm+": "+items.menu.length;
+			} else {
+				return "Items found: "+items.menu.length+" (no filter set)";
+			}
+		}
 	}
 	
 })();

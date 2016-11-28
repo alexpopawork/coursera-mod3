@@ -1,4 +1,12 @@
 <div>
-	<h3>Items found excluding {{foundItems.searchTerm}}: {{foundItems.found.length}}</h3>
-	<li ng-repeat="entry in foundItems.found">{{entry.name}}</li>
+	<h3>{{items.getMessage()}}</h3>
+	<ul class="no-bullets">
+		<li ng-repeat="entry in items.menu">
+			<span class="glyphicon glyphicon-check"></span>
+			{{entry.name}}
+			<a href="#" class="btn btn-info" ng-click="items.onRemove({indexToDelete: $index})">
+				<span class="glyphicon glyphicon-remove"></span> Don't want this one! 
+			</a>
+		</li>
+	</ul>
 </div>
