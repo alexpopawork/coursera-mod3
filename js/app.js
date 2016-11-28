@@ -36,10 +36,11 @@
 				method: 'GET',
 				url: 'https://davids-restaurant.herokuapp.com/menu_items.json'
 			}).then(function (result) {
-				var foundItems = result.data.menu_items;
-				for(var i=0; i<foundItems.length; i++){
-					if(searchTerm.length != 0 && foundItems[i].name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1){
-						foundItems.splice(i, 1);
+				var allItems = result.data.menu_items;
+				var foundItems = [];
+				for(var i=0; i<allItems.length; i++){
+					if(searchTerm.length != 0 && allItems[i].name.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1){
+						foundItems.push(allItems[i]);
 					}
 				}
 				return foundItems;
@@ -47,6 +48,8 @@
 		};
 	};
 	
+	
+	// FoundItems directive
 	function FoundItems(){
 		return {
 			scope: {
@@ -68,9 +71,12 @@
 				return '';
 			}
 			if(items.searchTerm.length != 0){
-				return "Items found excluding "+items.searchTerm+": "+items.menu.length;
+				if(items.menu == null || items.menu.length == 0){
+					return 'Nothing found for '+items.searchTerm;
+				}
+				return "Items found containing "+items.searchTerm+": "+items.menu.length;
 			} else {
-				return "Items found: "+items.menu.length+" (no filter set)";
+				return "Nothing found";
 			}
 		}
 	}

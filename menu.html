@@ -1,12 +1,35 @@
 <div>
 	<h3>{{items.getMessage()}}</h3>
-	<ul class="no-bullets">
-		<li ng-repeat="entry in items.menu">
-			<span class="glyphicon glyphicon-check"></span>
-			{{entry.name}}
-			<a href="#" class="btn btn-info" ng-click="items.onRemove({indexToDelete: $index})">
-				<span class="glyphicon glyphicon-remove"></span> Don't want this one! 
-			</a>
-		</li>
-	</ul>
+
+	<table class="table table-striped">
+		<thead>
+			<tr ng-hide="items.menu == null || items.menu.length == 0">
+				<th>#</th>
+				<th>Name</th>
+				<th>Codename</th>
+				<th>Price</th>
+				<th>Min. Price</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="entry in items.menu">
+				<td>{{entry.id}}</td>
+				<td><span class="glyphicon glyphicon-check"></span> {{entry.name}}</td>
+				<td>{{entry.short_name}}</td>
+				<td>{{entry.price_large}}</td>
+				<td>{{entry.price_small}}</td>
+				<td title="{{entry.description}}">
+					<span class="glyphicon glyphicon-info-sign"></span> Hover for full description
+				</td>
+				<td>
+					<a href="#" class="btn btn-info" ng-click="items.onRemove({indexToDelete: $index})">
+						<span class="glyphicon glyphicon-remove"></span> Don't want this one! 
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
 </div>

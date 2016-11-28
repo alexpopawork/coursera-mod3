@@ -31,14 +31,11 @@ input[type="text"] {
   height: 3em;
 }
 
-.no-bullets{
+.table-striped{
 	list-style: none;
 	padding: 0;
 }
-.no-bullets li{
-	margin-bottom: 5px;
-}
-.no-bullets .btn-info {
+.table-striped .btn-info {
     font-size: 12px;
     padding: 5px 10px 3px;
 }
